@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>For My Love 💖</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #000000, #1a001a);
+      color: white;
+      text-align: center;
+      font-family: Arial;
+      overflow: hidden;
+    }
+
+    .container { padding: 80px 20px; }
+
+    button {
+      padding: 12px 25px;
+      margin: 10px;
+      border: none;
+      border-radius: 20px;
+      background: pink;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .hidden { display: none; }
+
+    .slide {
+      display: none;
+      font-size: 20px;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    img {
+      width: 230px;
+      border-radius: 20px;
+      margin-top: 20px;
+    }
+
+    #noBtn { position: absolute; }
+
+    .flower {
+      position: fixed;
+      top: -10px;
+      font-size: 20px;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      to { transform: translateY(100vh); }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- Q1 -->
+<div class="container" id="slide1">
+  <h1>Happy Mensive 💖</h1>
+  <p>Answer this first 🤍</p>
+  <p>When did we first meet?</p>
+
+  <button onclick="wrong()">18 November 2025</button>
+  <button onclick="next1()">19 November 2025</button>
+  <button onclick="wrong()">20 November 2025</button>
+  <button onclick="wrong()">I forgot </button>
+</div>
+
+<!-- Q2 -->
+<div class="container hidden" id="slide2">
+  <p>Who loves more? </p>
+
+  <button onclick="wrong()">You</button>
+  <button onclick="wrong()">Me</button>
+  <button onclick="next2()">Both of us 💖</button>
+</div>
+
+<!-- Q3 -->
+<div class="container hidden" id="slide3">
+  <p>Do you still love me?</p>
+  <button onclick="next3()">Yes 💖</button>
+  <button id="noBtn">No 😭</button>
+</div>
+
+<!-- TIMER -->
+<div class="container hidden" id="slide4">
+  <h2>Time with you 🤍</h2>
+  <p id="timer"></p>
+  <button onclick="next4()">Next</button>
+</div>
+
+<!-- UCAPAN -->
+<div id="slide6" class="slide">
+  <p id="typing"></p>
+</div>
+
+<div id="slide7" class="slide">I love you more than I can explain 💕</div>
+
+<button id="nextBtn" class="hidden" onclick="nextSlide()">Next</button>
+
+<audio autoplay loop>
+  <source src="https://files.catbox.moe/8p2n5x.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function wrong(){
+  alert("ehh wrong answer 😤 try again!");
+}
+
+function next1(){
+  slide1.classList.add("hidden");
+  slide2.classList.remove("hidden");
+}
+
+function next2(){
+  slide2.classList.add("hidden");
+  slide3.classList.remove("hidden");
+}
+
+function next3(){
+  slide3.classList.add("hidden");
+  slide4.classList.remove("hidden");
+  startTimer();
+}
+
+function next4(){
+  slide4.classList.add("hidden");
+  slide5.style.display="block";
+  nextBtn.classList.remove("hidden");
+}
+
+const noBtn=document.getElementById("noBtn");
+noBtn.addEventListener("mouseover",()=>{
+  noBtn.style.top=Math.random()*80+"%";
+  noBtn.style.left=Math.random()*80+"%";
+});
+
+function startTimer(){
+  const start=new Date("November 19, 2025 00:00:00");
+
+  setInterval(()=>{
+    const now=new Date();
+    const diff=now-start;
+
+    const d=Math.floor(diff/(1000*60*60*24));
+    const h=Math.floor((diff/(1000*60*60))%24);
+    const m=Math.floor((diff/(1000*60))%60);
+    const s=Math.floor((diff/1000)%60);
+
+    timer.innerHTML=d+" days "+h+" hours "+m+" minutes "+s+" seconds";
+  },1000);
+}
+
+let current=5;
+function nextSlide(){
+  document.getElementById("slide"+current).style.display="none";
+  current++;
+
+  if(current<=7){
+    document.getElementById("slide"+current).style.display="block";
+  } else {
+    nextBtn.innerHTML="💖 I Love You 💖";
+  }
+}
+
+for(let i=0;i<20;i++){
+  let f=document.createElement("div");
+  f.innerHTML="🌸";
+  f.classList.add("flower");
+  f.style.left=Math.random()*100+"%";
+  f.style.animationDuration=(3+Math.random()*5)+"s";
+  document.body.appendChild(f);
+}
+
+const text = `Happy 4th monthsary, my love ❤️
+I still can’t believe it’s already been four months since we started this journey together...
+
+Time feels so fast when I’m with you, yet every single moment means everything to me.
+
+You’re not just someone I love, but someone I feel safe with 🤍
+
+Thank you for your patience, your kindness, and for always staying.
+
+I don’t just want months with you… I want forever.
+
+I love you more than I can explain 💕`;
+
+let i=0;
+const typingText=document.getElementById("typing");
+
+function typing(){
+  if(i<text.length){
+    typingText.innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typing,30);
+  }
+}
+typing();
+</script>
+
+</body>
+</html>
