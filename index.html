@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+  margin:0;
+  font-family:sans-serif;
+  background: radial-gradient(circle at top, #1a1a2e, #0f0c29, #000);
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* STARS */
+#stars {
+  position:fixed;
+  width:100%;
+  height:100%;
+}
+.star {
+  position:absolute;
+  width:2px;
+  height:2px;
+  background:white;
+  animation: twinkle 2s infinite alternate;
+}
+@keyframes twinkle {
+  from {opacity:0.2;}
+  to {opacity:1;}
+}
+
+/* FLOWER */
+.flower {
+  position:absolute;
+  top:18%;
+  left:50%;
+  transform:translateX(-50%);
+  animation:spin 12s linear infinite;
+}
+.petal {
+  position:absolute;
+  width:80px;
+  height:80px;
+  background:#ff4d88;
+  border-radius:50%;
+  top:50%;
+  left:50%;
+  transform-origin:0 0;
+  box-shadow:0 0 30px #ff4d88;
+}
+.center {
+  width:70px;
+  height:70px;
+  background:#ffd166;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 25px #ffd166;
+}
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+}
+
+/* HEARTS */
+.heart {
+  position:absolute;
+  color:#ff4d88;
+  animation:fall linear infinite;
+}
+@keyframes fall {
+  to {transform:translateY(100vh); opacity:0;}
+}
+
+/* BOX */
+.container {
+  position:absolute;
+  bottom:8%;
+  width:90%;
+  background: rgba(0,0,0,0.4);
+  padding:20px;
+  border-radius:20px;
+  backdrop-filter: blur(10px);
+}
+
+/* TEXT */
+h3, p {
+  text-shadow:0 0 10px rgba(0,0,0,0.7);
+}
+
+button {
+  margin:10px;
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d88;
+  color:white;
+}
+
+.hidden {display:none;}
+
+#typing {
+  min-height:50px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="stars"></div>
+
+<!-- FLOWER -->
+<div class="flower">
+  <div class="petal" style="transform:rotate(0deg)"></div>
+  <div class="petal" style="transform:rotate(60deg)"></div>
+  <div class="petal" style="transform:rotate(120deg)"></div>
+  <div class="petal" style="transform:rotate(180deg)"></div>
+  <div class="petal" style="transform:rotate(240deg)"></div>
+  <div class="petal" style="transform:rotate(300deg)"></div>
+  <div class="center"></div>
+</div>
+
+<div class="container">
+
+<!-- QUIZ -->
+<div id="q1">
+  <h3>When did we first meet? </h3>
+  <button onclick="wrong()">des 18 2026</button>
+  <button onclick="correct(1)">Nov 19 2025</button>
+  <button onclick="wrong()">Nov 20 2025</button>
+</div>
+
+<div id="q2" class="hidden">
+  <h3>Who loves more? </h3>
+  <button onclick="wrong()">Me only</button>
+  <button onclick="correct(2)">Both of us</button>
+  <button onclick="wrong()">You only</button>
+</div>
+
+<div id="q3" class="hidden">
+  <h3>What are you to me? </h3>
+  <button onclick="wrong()">Friend</button>
+  <button onclick="correct(3)">My home</button>
+  <button onclick="wrong()">Nothing</button>
+</div>
+
+<!-- FINAL -->
+<div id="final" class="hidden">
+  <h2>⏳ Time since we met</h2>
+  <h3 id="timer"></h3>
+
+  <div id="typing"></div>
+
+  <button onclick="showSurprise()">open this ❤️</button>
+</div>
+
+<!-- SURPRISE -->
+<div id="surprise" class="hidden">
+  <h2>💌</h2>
+  <p>
+  Happy 4th monthsary, my Yayi ❤️
+I still can’t believe it’s already been four months since we started this journey together. Time feels so fast when I’m with you, yet every single moment we’ve shared is something i deeply cherish. From the smallest conversations to the biggest laughs, everything feels special because it’s with you.
+You’ve become such an important part of my life. You’re not just someone i love, but also someone i feel safe with, someone i can be myself around without pretending to be anyone else. Thank you for your patience, your kindness, and the way you always try to understand me even when I’m not easy to handle.
+I’m grateful for every little thing you do, even the things you might not realize matter so much to me. The way you care, the way you listen, the way you stay… it all means more than i can put into words. Four months may sound short to some people, but for me, it’s already filled with so many memories ill never forget. And honestly, i don’t just want months with you, i want more time, more moments, more everything, as long as it’s with you. No matter what happens, i hope we keep choosing each other, growing together, and holding on through both the good and the hard days.
+I love you more than I can explain, and I’m so lucky to have you in my life 💕
+  </p>
+</div>
+
+</div>
+
+<!-- MUSIC -->
+<audio autoplay loop>
+  <source src="https://files.catbox.moe/7q6b6p.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// QUIZ
+function wrong(){ alert("Wrong 😤 try again!"); }
+
+function correct(step){
+  document.getElementById("q"+step).classList.add("hidden");
+  if(step<3){
+    document.getElementById("q"+(step+1)).classList.remove("hidden");
+  } else {
+    document.getElementById("final").classList.remove("hidden");
+    startTimer();
+    startTyping();
+  }
+}
+
+// TIMER
+function startTimer(){
+  const startDate = new Date("2025-11-19T00:00:00");
+
+  setInterval(()=>{
+    const now = new Date();
+    let diff = now - startDate;
+
+    let d = Math.floor(diff/(1000*60*60*24));
+    let h = Math.floor((diff/(1000*60*60))%24);
+    let m = Math.floor((diff/(1000*60))%60);
+    let s = Math.floor((diff/1000)%60);
+
+    document.getElementById("timer").innerHTML =
+      d+" days "+h+" hours "+m+" minutes "+s+" seconds";
+  },1000);
+}
+
+// TYPING
+const text = "I didn’t just meet you... I found someone I never want to lose.";
+let i=0;
+
+function startTyping(){
+  function type(){
+    if(i<text.length){
+      document.getElementById("typing").innerHTML += text[i];
+      i++;
+      setTimeout(type,40);
+    }
+  }
+  type();
+}
+
+// HEARTS
+function createHeart(){
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  h.style.animationDuration=(3+Math.random()*3)+"s";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),5000);
+}
+setInterval(createHeart,400);
+
+// STARS
+for(let i=0;i<100;i++){
+  let star=document.createElement("div");
+  star.className="star";
+  star.style.top=Math.random()*100+"%";
+  star.style.left=Math.random()*100+"%";
+  star.style.animationDuration=(1+Math.random()*2)+"s";
+  document.getElementById("stars").appendChild(star);
+}
+
+// SURPRISE
+function showSurprise(){
+  document.getElementById("surprise").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
